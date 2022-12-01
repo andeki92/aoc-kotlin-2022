@@ -14,15 +14,14 @@ fun main() {
 }
 
 
-private fun partitionInput(input: List<String>, delimiter: String = ""): List<List<Int>> {
+private fun partitionInput(input: List<String>): List<List<Int>> {
     val splitAt = input.asSequence().withIndex()
-        .filter { it.value == delimiter }
+        .filter { it.value.isBlank() }
         .map { it.index + 1 }
         .plus(listOf(0, input.size - 1)) // add the first and last indices
-        .sorted()
-        .toList()
+        .sorted().toList()
 
-    // rune a window over the splitAt-list create sublist from the input
+    // run a window over the splitAt-list to create subLists from the input
     return splitAt
         .windowed(2, step = 1)
         .map { input.subList(it[0], it[1] - 1) }
