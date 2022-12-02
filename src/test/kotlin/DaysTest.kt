@@ -7,6 +7,7 @@ class DaysTest {
     @TestFactory
     fun `aoc 2022`() = aocTests {
         test<Day01>(24000, 45000)
+        test<Day02>(15, 12)
     }
 }
 
