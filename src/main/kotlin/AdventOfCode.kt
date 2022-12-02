@@ -1,82 +1,47 @@
-import utils.chunked
-import utils.runWithTiming
-import kotlin.io.path.Path
-import kotlin.io.path.readLines
+import com.github.ajalt.mordant.rendering.TextColors
+import com.github.ajalt.mordant.terminal.Terminal
+import models.InputProvider
+import solutions.Day
+import utils.create
+import kotlin.reflect.KClass
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTimedValue
 
 
-sealed interface InputProvider {
-    fun loadInput(day: Int): List<String>
+@ExperimentalTime
+fun main() {
+    val t = Terminal()
+    t.println(TextColors.red("\n~~~ Advent Of Code Runner ~~~\n"))
+    val dayClasses = getAllDayClasses().sortedBy { it.simpleName }
 
-    companion object {
-        private fun getBaseFilename(day: Int): String = "day${"%02d".format(day)}"
-        private fun getFile(filename: String): List<String> = Path("src", "main", "resources", filename).readLines()
-    }
-
-
-    object Test : InputProvider {
-        override fun loadInput(day: Int): List<String> = getFile("${getBaseFilename(day)}.example.txt")
-    }
-
-    object Competition : InputProvider {
-        override fun loadInput(day: Int): List<String> = getFile("${getBaseFilename(day)}.txt")
-    }
-}
-
-
-inline fun <reified T : Day> solve() {
     with(InputProvider.Competition) {
-        create<T>().solve()
+        val totalDuration = dayClasses.map { create(it).execute() }.reduceOrNull(Duration::plus)
+        println("\nTotal runtime: $totalDuration")
     }
 }
 
-inline fun <reified T : Day> test(expectedPart1: Any?, expectedPart2: Any?) {
-    with(InputProvider.Test) {
-        with(create<T>()) {
-            println("Checking part 1... ")
-            part1().let { result ->
-                check(result.toString() == expectedPart1.toString()) {
-                    "Part 1 result failed!\nExpected: $expectedPart1\nActual: $result"
-                }
-            }
-            println("Checking part 2... ")
-            part2().let { result ->
-                check(result.toString() == expectedPart2.toString()) {
-                    "Part 2 result failed!\nExpected: $expectedPart2\nActual: $result"
-                }
-            }
-        }
-    }
+private fun getAllDayClasses(): Set<KClass<out Day>> =
+    Day::class.sealedSubclasses.toSet()
+
+@ExperimentalTime
+private fun <T : Day> T.execute(): Duration {
+    print("${day}: ${this.title}".paddedTo(30, 30))
+    val part1 = measureTimedValue { this.part1() }
+    println("Part 1 [${part1.duration.toString().padStart(6)}]: ${part1.value}")
+    print(" ".repeat(30))
+    val part2 = measureTimedValue { this.part2() }
+    println("Part 2 [${part2.duration.toString().padStart(6)}]: ${part2.value}")
+    return part1.duration + part2.duration
 }
 
-context (InputProvider)
-inline fun <reified T : Day> create(): T {
-    return T::class.constructors.first { it.parameters.isEmpty() }.call(this@InputProvider)
-}
-
-context(InputProvider)
-sealed class Day(private val day: Int, private val year: Int = 2022) {
-
-    private val input: List<String> by lazy { loadInput(day) }
-
-    /**
-     * Input helper methods making bootstrapping easier
-     */
-    val inputPairs: List<Pair<String, String>> by lazy {
-        input.map { round -> round.split(" ").let { it[0] to it[1] } }
-    }
-    val inputChunks: List<List<String>> by lazy { input.chunked(String::isEmpty) }
-
-    init {
-        require(day in 1..25) { "Invalid day $day" }
-        require(year in 2022..2022) { "Invalid year $year" }
-        require(input.isNotEmpty()) { "Empty input" }
+fun String.paddedTo(minWidth: Int, maxWidth: Int) =
+    when {
+        length > maxWidth -> this.substring(0, maxWidth - 3) + "..."
+        length < minWidth -> this.padEnd(minWidth)
+        else -> this
     }
 
-    abstract fun part1(): Any
-    abstract fun part2(): Any
 
-    fun solve() {
-        runWithTiming("1") { part1() }
-        runWithTiming("2") { part2() }
-    }
-}
+
+

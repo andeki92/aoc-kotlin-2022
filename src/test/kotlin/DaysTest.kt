@@ -1,5 +1,10 @@
+import models.InputProvider
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
+import solutions.Day
+import solutions.Day01
+import solutions.Day02
+import utils.create
 import kotlin.test.assertEquals
 
 class DaysTest {
