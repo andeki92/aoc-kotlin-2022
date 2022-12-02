@@ -11,8 +11,8 @@ class Day02 : Day(2, 2022, "Rock Paper Scissors") {
                 val s1 = "XYZ".indexOf(xyz) + 1
                 val s2 = when(abc to xyz) {
                     'A' to 'X', 'B' to 'Y', 'C' to 'Z' -> 3 /* Draws */
-                    'A' to 'Y', 'B' to 'Z', 'C' to 'X' -> 3 /* Win */
-                    'A' to 'Z', 'B' to 'X', 'C' to 'Y' -> 3 /* Loose */
+                    'A' to 'Y', 'B' to 'Z', 'C' to 'X' -> 6 /* Win */
+                    'A' to 'Z', 'B' to 'X', 'C' to 'Y' -> 0 /* Loose */
                     else -> error("invalid $abc to $xyz")
                 }
                 s1 + s2
