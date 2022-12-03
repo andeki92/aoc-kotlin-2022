@@ -32,14 +32,13 @@ tasks {
 }
 
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "17"
-        useK2 = true
-        freeCompilerArgs = listOf("-Xcontext-receivers")
-    }
-}
-
 application {
     mainClass.set("AdventOfCodeKt")
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    languageVersion = "1.8"
+    jvmTarget = "17"
+    useK2 = true
+    freeCompilerArgs = listOf("-Xcontext-receivers")
 }

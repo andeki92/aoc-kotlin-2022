@@ -8,7 +8,7 @@ import utils.runWithTiming
 context(InputProvider)
 sealed class Day(val day: Int, private val year: Int = 2022, val title: String) {
 
-    private val input: List<String> by lazy { loadInput(day) }
+    val input: List<String> by lazy { loadInput(day) }
 
     /**
      * Input helper methods making bootstrapping easier
