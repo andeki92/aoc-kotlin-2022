@@ -13,7 +13,7 @@ class Day03 : Day(3, 2022, "Rucksack Reorganization") {
             val splitIndex = rucksack.size / 2
 
             // Slice the rucksack into two compartments
-            rucksack.slice(0..<splitIndex).toSet() to rucksack.slice(splitIndex..<rucksack.size).toSet()
+            rucksack.slice(0 until splitIndex).toSet() to rucksack.slice(splitIndex until rucksack.size).toSet()
         }
 
         return compartments

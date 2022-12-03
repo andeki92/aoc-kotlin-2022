@@ -37,7 +37,6 @@ application {
 }
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
-    languageVersion = "1.8"
     jvmTarget = "17"
     useK2 = true
     freeCompilerArgs = listOf("-Xcontext-receivers")
