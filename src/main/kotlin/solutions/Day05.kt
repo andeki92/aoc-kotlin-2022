@@ -5,7 +5,23 @@ import models.InputProvider
 
 val digitMatcher = "\\d+".toRegex()
 
+typealias Stack = ArrayDeque<Char>
+
+fun Stack.push(value: Char) = add(value)
+fun Stack.push(values: List<Char>) = addAll(values)
+fun Stack.pop() = removeLast()
+
+fun Stack.pop(count: Int) = takeLast(count).also { repeat(count) { removeLast() } }
+
+
+typealias Stacks = List<Stack>
+
+fun Stacks.topCrates() = map { it.last() }.joinToString("")
+fun Stacks.copy() = map { ArrayDeque(it) }
+
+
 context (InputProvider)
+
 class Day05 : Day(5, 2022, "Supply Stacks") {
 
     private val rawInput = input.let {
@@ -13,38 +29,38 @@ class Day05 : Day(5, 2022, "Supply Stacks") {
         it.subList(0, instructionIndex) to it.subList(instructionIndex + 1, it.size)
     }
 
-    private val arrangement = rawInput.first.dropLast(1).let { stacksInput ->
-        val stacks = stacksInput.map { input -> input.chunked(4).map { it[1] } }
-        val maxStack = stacks.maxBy { it.size }.size
+    private val initialStacks: Stacks = rawInput.first.dropLast(1).let { stacksInput ->
+        val buckets = (stacksInput.maxBy { it.length }.length + 1) / 4
+        val stacks = (1..buckets).map { Stack() }
 
-        (0 until maxStack).map { row ->
-            (stacks.indices).mapNotNull { col ->
-                stacks.getOrNull(col)?.getOrNull(row)
-            }.filterNot(Char::isWhitespace).reversed()
+        stacksInput.forEach {
+            it.chunked(4).forEachIndexed { index, crate ->
+                if (crate.contains("[")) stacks[index].addFirst(crate[1])
+            }
         }
+
+        stacks
     }
 
     private val instructions = rawInput.second.map { instruction ->
         digitMatcher.findAll(instruction).map(MatchResult::value).toList()
-    }.map { Triple(it[0].toInt(), it[1].toInt(), it[2].toInt()) }
+    }.map { Triple(it[0].toInt(), it[1].toInt() - 1, it[2].toInt() - 1) }
 
 
-    override fun part1(): Any {
-        return instructions.fold(arrangement.toMutableList()) { acc, (count, from, to) ->
+    override fun part1(): String {
+        return instructions.fold(initialStacks.copy()) { stacks, (count, from, to) ->
             repeat(count) {
-                acc[to - 1] = acc[to - 1].plus(acc[from - 1].last())
-                acc[from - 1] = acc[from - 1].dropLast(1)
+                stacks[to].push(stacks[from].pop())
             }
-            acc
-        }.joinToString("") { it.last().toString() }
+            stacks
+        }.topCrates()
     }
 
-    override fun part2(): Any {
-        return instructions.fold(arrangement.toMutableList()) { acc, (count, from, to) ->
-            acc[to - 1] = acc[to - 1].plus(acc[from - 1].takeLast(count))
-            acc[from - 1] = acc[from - 1].dropLast(count)
-            acc
-        }.joinToString("") { it.last().toString() }
+    override fun part2(): String {
+        return instructions.fold(initialStacks.copy()) { stacks, (count, from, to) ->
+            stacks[to].push(stacks[from].pop(count))
+            stacks
+        }.topCrates()
     }
 }
 
