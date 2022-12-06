@@ -29,15 +29,19 @@ tasks {
     wrapper {
         gradleVersion = "7.6"
     }
+
+
 }
 
 
 application {
     mainClass.set("AdventOfCodeKt")
 }
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-    jvmTarget = "17"
-    useK2 = true
-    freeCompilerArgs = listOf("-Xcontext-receivers")
+
+tasks.withType(KotlinCompile::class).all {
+    kotlinOptions {
+        jvmTarget = "17"
+        useK2 = true
+        freeCompilerArgs = listOf("-Xcontext-receivers")
+    }
 }

@@ -1,9 +1,7 @@
 import models.InputProvider
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
-import solutions.Day
-import solutions.Day01
-import solutions.Day02
+import solutions.*
 import utils.create
 import kotlin.test.assertEquals
 
@@ -13,6 +11,10 @@ class DaysTest {
     fun `aoc 2022`() = aocTests {
         test<Day01>(24000, 45000)
         test<Day02>(15, 12)
+        test<Day03>(157, 70)
+        test<Day04>(2, 4)
+        test<Day05>("CMZ", "MCD")
+        test<Day06>(7, 19)
     }
 }
 
