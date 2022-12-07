@@ -20,22 +20,23 @@ class Directory(
 
 context (InputProvider)
 class Day07 : Day(7, 2022, "No Space Left On Device") {
+
     private val root = Directory("/", null).apply {
-        input.fold(this) { currentDir, command: String ->
+        input.fold(this) { directory, command: String ->
             when {
-                command == "$ cd /" -> currentDir
-                command == "$ cd .." -> currentDir.parent!!
-                command == "$ ls" -> currentDir /* no op */
+                command == "$ cd /" -> directory
+                command == "$ ls" -> directory
+                command == "$ cd .." -> directory.parent!!
                 command.startsWith("$ cd") -> {
-                    currentDir.children.first { it.name == command.substringAfter("cd ") }
+                    directory.children.first { it.name == command.substringAfter("cd ") }
                 }
                 command.startsWith("dir") -> {
-                    val dir = Directory(command.substringAfter("dir "), currentDir)
-                    currentDir.addSubdirectory(dir)
+                    val dir = Directory(command.substringAfter("dir "), directory)
+                    directory.addSubdirectory(dir)
                 }
                 else -> {
                     val fileSize = command.substringBefore(" ").toLong()
-                    currentDir.addFile(fileSize)
+                    directory.addFile(fileSize)
                 }
             }
         }
