@@ -15,6 +15,7 @@ class DaysTest {
         test<Day04>(2, 4)
         test<Day05>("CMZ", "MCD")
         test<Day06>(7, 19)
+        test<Day07>(95437, 24_933_642)
     }
 }
 
