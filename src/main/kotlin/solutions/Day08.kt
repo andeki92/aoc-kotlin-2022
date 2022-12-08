@@ -1,9 +1,8 @@
 package solutions
 
-import models.InputProvider
+import models.InputContext
 
-
-context (InputProvider)
+context (InputContext)
 class Day08 : Day(8, 2022, "Treetop Tree House") {
 
     private val heightmap: List<List<Int>> = inputIntMatrix

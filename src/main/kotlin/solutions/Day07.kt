@@ -1,6 +1,6 @@
 package solutions
 
-import models.InputProvider
+import models.InputContext
 
 class Directory(
     val name: String,
@@ -18,7 +18,7 @@ class Directory(
 }
 
 
-context (InputProvider)
+context (InputContext)
 class Day07 : Day(7, 2022, "No Space Left On Device") {
 
     private val root = Directory("/", null).apply {
@@ -30,10 +30,12 @@ class Day07 : Day(7, 2022, "No Space Left On Device") {
                 command.startsWith("$ cd") -> {
                     directory.children.first { it.name == command.substringAfter("cd ") }
                 }
+
                 command.startsWith("dir") -> {
                     val dir = Directory(command.substringAfter("dir "), directory)
                     directory.addSubdirectory(dir)
                 }
+
                 else -> {
                     val fileSize = command.substringBefore(" ").toLong()
                     directory.addFile(fileSize)

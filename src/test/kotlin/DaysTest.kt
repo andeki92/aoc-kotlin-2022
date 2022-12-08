@@ -1,4 +1,4 @@
-import models.InputProvider
+import models.InputContext
 import org.junit.jupiter.api.DynamicTest
 import org.junit.jupiter.api.TestFactory
 import solutions.*
@@ -28,7 +28,7 @@ private class AoCTestBuilder {
     private val tests = mutableListOf<DynamicTest>()
 
     inline fun <reified D : Day> test(expectedPart1: Any? = null, expectedPart2: Any? = null) =
-        with(InputProvider.Test) {
+        with(InputContext.Test) {
             tests += listOfNotNull(
                 expectedPart1?.let {
                     DynamicTest.dynamicTest("${D::class.simpleName} - Part 1")

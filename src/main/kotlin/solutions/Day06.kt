@@ -1,9 +1,8 @@
 package solutions
 
-import models.InputProvider
+import models.InputContext
 
-
-context (InputProvider)
+context (InputContext)
 class Day06 : Day(6, 2022, "Tuning Trouble") {
 
     private val signal = input.first()

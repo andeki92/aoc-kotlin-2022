@@ -1,8 +1,8 @@
 package solutions
 
-import models.InputProvider
+import models.InputContext
 
-context (InputProvider)
+context (InputContext)
 class Day04 : Day(4, 2022, "Camp Cleanup") {
     private val assignments: List<Pair<IntRange, IntRange>> = input.map { line ->
         line.split(",").let {

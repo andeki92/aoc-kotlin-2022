@@ -1,13 +1,12 @@
 package solutions
 
-import models.InputProvider
+import models.InputContext
 
-context (InputProvider)
+context (InputContext)
 class Day03 : Day(3, 2022, "Rucksack Reorganization") {
     private val rucksacks: List<CharArray> = input.map(String::toCharArray)
 
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun part1(): Int {
         val compartments = rucksacks.map { rucksack ->
             val splitIndex = rucksack.size / 2

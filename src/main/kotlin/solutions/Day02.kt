@@ -1,27 +1,27 @@
 package solutions
 
-import models.InputProvider
+import models.InputContext
 
-context (InputProvider)
+context (InputContext)
 class Day02 : Day(2, 2022, "Rock Paper Scissors") {
     private val rounds = inputPairs.map { (a, b) -> a.first() to b.first() }
 
     override fun part1(): Any {
         return rounds.sumOf { (abc, xyz) ->
-                val s1 = "XYZ".indexOf(xyz) + 1
-                val s2 = when(abc to xyz) {
-                    'A' to 'X', 'B' to 'Y', 'C' to 'Z' -> 3 /* Draws */
-                    'A' to 'Y', 'B' to 'Z', 'C' to 'X' -> 6 /* Win */
-                    'A' to 'Z', 'B' to 'X', 'C' to 'Y' -> 0 /* Loose */
-                    else -> error("invalid $abc to $xyz")
-                }
-                s1 + s2
+            val s1 = "XYZ".indexOf(xyz) + 1
+            val s2 = when (abc to xyz) {
+                'A' to 'X', 'B' to 'Y', 'C' to 'Z' -> 3 /* Draws */
+                'A' to 'Y', 'B' to 'Z', 'C' to 'X' -> 6 /* Win */
+                'A' to 'Z', 'B' to 'X', 'C' to 'Y' -> 0 /* Loose */
+                else -> error("invalid $abc to $xyz")
+            }
+            s1 + s2
         }
     }
 
     override fun part2(): Any {
         return rounds.sumOf { (abc, xyz) ->
-            val s1 = when(abc to xyz) {
+            val s1 = when (abc to xyz) {
                 'A' to 'Y', 'B' to 'X', 'C' to 'Z' -> 1 /* Rock */
                 'A' to 'Z', 'B' to 'Y', 'C' to 'X' -> 2 /* Paper */
                 'A' to 'X', 'B' to 'Z', 'C' to 'Y' -> 3 /* Scissor */

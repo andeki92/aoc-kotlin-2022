@@ -3,7 +3,7 @@ package models
 import kotlin.io.path.Path
 import kotlin.io.path.readLines
 
-sealed interface InputProvider {
+sealed interface InputContext {
     fun loadInput(day: Int): List<String>
 
     companion object {
@@ -11,12 +11,11 @@ sealed interface InputProvider {
         private fun getFile(filename: String): List<String> = Path("src", "main", "resources", filename).readLines()
     }
 
-
-    object Test : InputProvider {
+    object Test : InputContext {
         override fun loadInput(day: Int): List<String> = getFile("${getBaseFilename(day)}.example.txt")
     }
 
-    object Competition : InputProvider {
+    object Competition : InputContext {
         override fun loadInput(day: Int): List<String> = getFile("${getBaseFilename(day)}.txt")
     }
 }

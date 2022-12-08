@@ -1,7 +1,6 @@
 package solutions
 
-import models.InputProvider
-
+import models.InputContext
 
 val digitMatcher = "\\d+".toRegex()
 
@@ -17,7 +16,8 @@ typealias Stacks = List<Stack>
 fun Stacks.topCrates() = map { it.last() }.joinToString("")
 fun Stacks.copy() = map { ArrayDeque(it) }
 
-context (InputProvider)
+
+context (InputContext)
 class Day05 : Day(5, 2022, "Supply Stacks") {
 
     private val rawInput = input.let {
