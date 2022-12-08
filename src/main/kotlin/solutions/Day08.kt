@@ -11,11 +11,13 @@ class Day08 : Day(8, 2022, "Treetop Tree House") {
     override fun part1(): Int {
         return heightmap.flatMapIndexed { y, row ->
             row.filterIndexed { x, height ->
+                val column = heightmap.map { it[x] }
+
                 // Perform 4 passes left-to-right, right-to-left, top-to-bottom and bottom-to-top
-                val ltr = heightmap[y].take(x)
-                val rtl = heightmap[y].drop(x + 1)
-                val ttb = heightmap.withIndex().take(y).map { heightmap[it.index][x] }
-                val btt = heightmap.withIndex().drop(y + 1).map { heightmap[it.index][x] }
+                val ltr = row.take(x)
+                val rtl = row.drop(x + 1)
+                val ttb = column.take(y)
+                val btt = column.drop(y + 1)
 
                 val directions = listOf(ltr, rtl, ttb, btt)
 
@@ -28,11 +30,13 @@ class Day08 : Day(8, 2022, "Treetop Tree House") {
     override fun part2(): Int {
         return heightmap.flatMapIndexed { y, row ->
             row.mapIndexed { x, height ->
+                val column = heightmap.map { it[x] }
+
                 // Perform 4 passes left-to-right, right-to-left, top-to-bottom and bottom-to-top
-                val ltr = heightmap[y].take(x).reversed()
-                val rtl = heightmap[y].drop(x + 1)
-                val ttb = heightmap.withIndex().take(y).map { heightmap[it.index][x] }.reversed()
-                val btt = heightmap.withIndex().drop(y + 1).map { heightmap[it.index][x] }
+                val ltr = row.take(x).reversed() // here x, y is the 'origin'
+                val rtl = row.drop(x + 1)
+                val ttb = column.take(y).reversed()
+                val btt = column.drop(y + 1)
 
                 val scoreList = buildList {
                     add(ltr.getScenicScore(height))
