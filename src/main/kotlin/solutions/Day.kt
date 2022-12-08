@@ -17,6 +17,9 @@ sealed class Day(val day: Int, private val year: Int = 2022, val title: String) 
         input.map { round -> round.split(" ").let { it[0] to it[1] } }
     }
     val inputChunks: List<List<String>> by lazy { input.chunked(String::isEmpty) }
+    val inputIntMatrix: List<List<Int>> by lazy {
+        input.map { row -> row.map { it.toString().toInt() } }
+    }
 
     init {
         require(day in 1..25) { "Invalid day $day" }
