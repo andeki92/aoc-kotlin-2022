@@ -7,7 +7,7 @@ import kotlin.reflect.full.primaryConstructor
 
 context (InputProvider)
 inline fun <reified T : Day> create(): T {
-    return T::class.constructors.first { it.parameters.isEmpty() }.call(this@InputProvider)
+    return T::class.primaryConstructor!!.call(this@InputProvider)
 }
 
 context(InputProvider)

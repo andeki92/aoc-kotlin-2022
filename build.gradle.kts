@@ -25,12 +25,9 @@ tasks {
     test {
         useJUnitPlatform()
     }
-
     wrapper {
         gradleVersion = "7.6"
     }
-
-
 }
 
 
