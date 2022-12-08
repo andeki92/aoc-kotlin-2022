@@ -1,11 +1,11 @@
 package solutions
 
-import models.InputContext
+import models.InputProvider
 import utils.chunked
 import utils.create
 import utils.runWithTiming
 
-context(InputContext)
+context(InputProvider)
 sealed class Day(val day: Int, private val year: Int = 2022, val title: String) {
 
     val input: List<String> by lazy { loadInput(day) }
@@ -37,13 +37,13 @@ sealed class Day(val day: Int, private val year: Int = 2022, val title: String) 
 }
 
 inline fun <reified T : Day> solve() {
-    with(InputContext.Competition) {
+    with(InputProvider.Competition) {
         create<T>().solve()
     }
 }
 
 inline fun <reified T : Day> test(expectedPart1: Any?, expectedPart2: Any?) {
-    with(InputContext.Test) {
+    with(InputProvider.Test) {
         with(create<T>()) {
             println("Checking part 1... ")
             part1().let { result ->

@@ -1,6 +1,6 @@
 package solutions
 
-import models.InputContext
+import models.InputProvider
 
 class Directory(
     val name: String,
@@ -18,7 +18,7 @@ class Directory(
 }
 
 
-context (InputContext)
+context (InputProvider)
 class Day07 : Day(7, 2022, "No Space Left On Device") {
 
     private val root = Directory("/", null).apply {

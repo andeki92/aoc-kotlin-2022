@@ -1,8 +1,8 @@
 package solutions
 
-import models.InputContext
+import models.InputProvider
 
-context (InputContext)
+context (InputProvider)
 class Day03 : Day(3, 2022, "Rucksack Reorganization") {
     private val rucksacks: List<CharArray> = input.map(String::toCharArray)
 

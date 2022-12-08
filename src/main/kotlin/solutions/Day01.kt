@@ -1,8 +1,8 @@
 package solutions
 
-import models.InputContext
+import models.InputProvider
 
-context (InputContext)
+context (InputProvider)
 class Day01 : Day(1, 2022, "Calorie Counting") {
     private val calorieList = inputChunks.map { c -> c.map(String::toInt) }
 

@@ -1,6 +1,6 @@
 import com.github.ajalt.mordant.rendering.TextColors
 import com.github.ajalt.mordant.terminal.Terminal
-import models.InputContext
+import models.InputProvider
 import solutions.Day
 import utils.create
 import kotlin.reflect.KClass
@@ -15,7 +15,7 @@ fun main() {
     t.println(TextColors.red("\n~~~ Advent Of Code Runner ~~~\n"))
     val dayClasses = getAllDayClasses().sortedBy { it.simpleName }
 
-    with(InputContext.Competition) {
+    with(InputProvider.Competition) {
         val totalDuration = dayClasses.map { create(it).execute() }.reduceOrNull(Duration::plus)
         println("\nTotal runtime: $totalDuration")
     }

@@ -1,8 +1,8 @@
 package solutions
 
-import models.InputContext
+import models.InputProvider
 
-context (InputContext)
+context (InputProvider)
 class Day02 : Day(2, 2022, "Rock Paper Scissors") {
     private val rounds = inputPairs.map { (a, b) -> a.first() to b.first() }
 
