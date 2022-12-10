@@ -2,7 +2,7 @@ package solutions
 
 import models.InputProvider
 
-class Directory(
+private class Directory(
     val name: String,
     val parent: Directory?,
     val children: MutableSet<Directory> = mutableSetOf(),

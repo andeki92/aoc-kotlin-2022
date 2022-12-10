@@ -4,7 +4,7 @@ import models.InputProvider
 import kotlin.math.sign
 import kotlin.reflect.KFunction1
 
-data class Position(val x: Int, val y: Int) {
+private data class Position(val x: Int, val y: Int) {
     fun up() = copy(y = this.y + 1)
     fun down() = copy(y = this.y - 1)
     fun right() = copy(x = this.x + 1)
@@ -14,7 +14,7 @@ data class Position(val x: Int, val y: Int) {
         other.x in (this.x - 1..this.x + 1) && other.y in (this.y - 1..this.y + 1)
 }
 
-typealias Step = KFunction1<Position, Position>
+private typealias Step = KFunction1<Position, Position>
 
 context (InputProvider)
 class Day09 : Day(9, 2022, "Rope Bridge") {

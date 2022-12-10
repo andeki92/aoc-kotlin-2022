@@ -4,17 +4,17 @@ import models.InputProvider
 
 val digitMatcher = "\\d+".toRegex()
 
-typealias Stack = ArrayDeque<Char>
+private typealias Stack = ArrayDeque<Char>
 
-fun Stack.push(value: Char) = add(value)
-fun Stack.push(values: List<Char>) = addAll(values)
-fun Stack.pop() = removeLast()
-fun Stack.pop(count: Int) = takeLast(count).also { repeat(count) { removeLast() } }
+private fun Stack.push(value: Char) = add(value)
+private fun Stack.push(values: List<Char>) = addAll(values)
+private fun Stack.pop() = removeLast()
+private fun Stack.pop(count: Int) = takeLast(count).also { repeat(count) { removeLast() } }
 
-typealias Stacks = List<Stack>
+private typealias Stacks = List<Stack>
 
-fun Stacks.topCrates() = map { it.last() }.joinToString("")
-fun Stacks.copy() = map { ArrayDeque(it) }
+private fun Stacks.topCrates() = map { it.last() }.joinToString("")
+private fun Stacks.copy() = map { ArrayDeque(it) }
 
 
 context (InputProvider)
